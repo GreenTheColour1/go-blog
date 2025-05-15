@@ -28,20 +28,40 @@ func Connect() {
 	db, err := sql.Open("postgres", pgsqlconn)
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	defer db.Close()
 
-	err = db.Ping()
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	fmt.Println("Connected")
+
+	ctx := context.Background()
+
+	createPostsTable(ctx, db)
+
+	loadMarkdownFiles(ctx, db)
 }
 
-func createPostsTable(ctx context.Context, db *sql.DB) {
+func GetPostBySlug(slug string, ctx context.Context, db *sql.DB) (*posts.Post, error) {
+	post := new(posts.Post)
+	if err := db.QueryRowContext(ctx, `SELECT filename FROM posts WHERE slug = $1`, slug).Scan(&post.Filename); err != nil {
+		return nil, fmt.Errorf("Failed to get post: %w", err)
+	}
+
+	return post, nil
+}
+
+func GetAllPosts(ctx context.Context, db *sql.DB) (*sql.Rows, error) {
+	posts, err := db.QueryContext(ctx, `SELECT created_at, title, slug FROM posts`)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to get posts: %w", err)
+	}
+
+	return posts, nil
+}
+
+func createPostsTable(ctx context.Context, db *sql.DB) error {
 	_, err := db.ExecContext(ctx, `
 		CREATE TABLE IF NOT EXISTS posts (
 			id uuid primary key,
@@ -54,8 +74,10 @@ func createPostsTable(ctx context.Context, db *sql.DB) {
 		)
 		`)
 	if err != nil {
-		fmt.Errorf("Failed to create table posts: %w", err)
+		return fmt.Errorf("Failed to create table posts: %w", err)
 	}
+
+	return nil
 }
 
 func loadMarkdownFiles(ctx context.Context, db *sql.DB) error {
