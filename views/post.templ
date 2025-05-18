@@ -1,0 +1,16 @@
+package views
+
+import "github.com/GreenTheColour1/go-blog/posts"
+
+templ PostBody(data posts.Post) {
+	@base() {
+		<div>
+			<div>
+				<h1>{ data.Title }</h1>
+			</div>
+			<article>
+				@templ.Raw(data.Body)
+			</article>
+		</div>
+	}
+}

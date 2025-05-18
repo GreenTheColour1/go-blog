@@ -12,7 +12,8 @@ type Post struct {
 	Title      string    `field:"title"`
 	Filename   string    `field:"filename"`
 	Slug       string    `field:"slug"`
+	Body       string
 }
 
-// go:embed *.md
+//go:embed files/*.md
 var Assets embed.FS

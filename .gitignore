@@ -1,2 +1,3 @@
 flake.lock
 pgdata
+views/*_templ.go

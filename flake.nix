@@ -17,6 +17,7 @@
 
         nativeBuildInputs = with pkgs; [
           go
+          templ
           postgresql
         ];
 
