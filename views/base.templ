@@ -3,13 +3,23 @@ package views
 templ base() {
 	<!DOCTYPE html>
 	<html lang="en">
-		<nav>
-			<a href="/">BLOGBLOGBLOG</a>
-		</nav>
-		<body>
-			{ children... }
+		<link href={ templ.SafeURL("assets/css/output.css") } rel="stylesheet"/>
+		<body class="bg-gruvbox-grey-400 ">
+			<div class="flex items-center mx-auto max-w-sm bg-gruvbox-grey-500 text-gruvbox-foreground-200 p-6">
+				<p class="">
+					MY BLOG
+				</p>
+				<nav class="">
+					<a href="/">HOME</a>
+					<a href="/posts">POSTS</a>
+					<a href="/resume">RESUME</a>
+				</nav>
+			</div>
+			<div>
+				{ children... }
+			</div>
 			<footer>
-				<aside>
+				<aside class="text-gruvbox-foreground-200">
 					<p>Copyright ©2024 </p>
 					<p>All right reserved by Cameron Green</p>
 				</aside>
