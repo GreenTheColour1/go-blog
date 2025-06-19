@@ -16,4 +16,4 @@ type Post struct {
 }
 
 //go:embed files/*.md
-var Assets embed.FS
+var PostAssets embed.FS

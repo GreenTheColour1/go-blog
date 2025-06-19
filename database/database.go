@@ -53,7 +53,7 @@ func (db Database) GetPostBySlug(slug string) (*posts.Post, error) {
 		return nil, fmt.Errorf("Failed to get post: %w", err)
 	}
 
-	body, err := posts.Assets.ReadFile(post.Filename)
+	body, err := posts.PostAssets.ReadFile(post.Filename)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to read file %s: %w", post.Filename, err)
 	}
@@ -103,7 +103,7 @@ func createPostsTable(ctx context.Context, db *sql.DB) error {
 }
 
 func loadMarkdownFiles(ctx context.Context, db *sql.DB) error {
-	files, err := fs.Glob(posts.Assets, "files/*.md")
+	files, err := fs.Glob(posts.PostAssets, "files/*.md")
 	if err != nil {
 		return fmt.Errorf("Failed to list embedded markdown files: %w", err)
 	}
@@ -115,7 +115,7 @@ func loadMarkdownFiles(ctx context.Context, db *sql.DB) error {
 	for _, file := range files {
 		embeddedFiles[file] = true
 
-		content, err := posts.Assets.ReadFile(file)
+		content, err := posts.PostAssets.ReadFile(file)
 		if err != nil {
 			return fmt.Errorf("Failed to read embedded file %s: %w", file, err)
 		}
