@@ -19,12 +19,21 @@
           go
           templ
           postgresql
+          nodejs
+          air
+          overmind
+          delve
+          tailwindcss_4
         ];
 
         shellHook = ''
           export PGHOST=$USER
           export PGDATA=./pgdata
           export PGSOCKET=/tmp
+
+          # needed for debugging with delve
+          export CGO_CFLAGS="-O2"
+          export CGO_CPPFLAGS="-O2"
 
           initdb -D $PGDATA
           pg_ctl -D "$PGDATA" -l $PGDATA/logfile -o "-k $PGSOCKET" start
@@ -37,9 +46,8 @@
 
           trap cleanup EXIT
 
-          # if [ -z "$ZSH_VERSION" ]; then
-          #   exec zsh
-          # fi
+          CURRENT_DIR=$(pwd)
+          tmuxp load "$CURRENT_DIR"
         '';
       };
 
