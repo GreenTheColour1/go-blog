@@ -1,0 +1,11 @@
+session_name: go-blog
+windows:
+  - window_name: dev
+    layout: tiled
+    focus: True
+    panes:
+      - nvim
+  - window_name: overmind
+    layout: tiled
+    panes:
+      - overmind start
