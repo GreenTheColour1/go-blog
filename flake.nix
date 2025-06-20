@@ -9,6 +9,31 @@
     { self, nixpkgs }:
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      templui = pkgs.buildGoModule rec {
+        pname = "templui";
+        version = "0.75.4";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "axzilla";
+          repo = "templui";
+          tag = "v${version}";
+          hash = "sha256-YxRC170+UsTxLrkYwWENwtknljZFh+PKmoRPCQlKMcM=";
+        };
+
+        nativeBuildInputs = with pkgs; [ templ ];
+
+        preBuild = ''
+          templ generate
+        '';
+
+        vendorHash = "sha256-oi225lRIyvuEvHJj0cwGwwUa1O5MeWWzsPkFK1cPwEY=";
+
+        meta = {
+          description = "The UI Kit for templ";
+          homepage = "https://templui.io/";
+          license = pkgs.lib.licenses.mit;
+        };
+      };
     in
     {
 
@@ -24,6 +49,7 @@
           overmind
           delve
           tailwindcss_4
+          templui
         ];
 
         shellHook = ''
