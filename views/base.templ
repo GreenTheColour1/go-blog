@@ -1,26 +1,52 @@
 package views
 
+import "github.com/GreenTheColour1/go-blog/views/modules"
+
+templ ThemeSwitcherScript() {
+	{{ handle := templ.NewOnceHandle() }}
+	@handle.Once() {
+		<script nonce={ templ.GetNonce(ctx) }>
+			// Initial theme setup
+			document.documentElement.classList.toggle('dark', localStorage.getItem('appTheme') === 'dark');
+
+			document.addEventListener('alpine:init', () => {
+				Alpine.data('themeHandler', () => ({
+					isDark: localStorage.getItem('appTheme') === 'dark',
+					themeClasses() {
+						return this.isDark ? 'text-white' : 'bg-white text-black'
+					},
+					toggleTheme() {
+						this.isDark = !this.isDark;
+						localStorage.setItem('appTheme', this.isDark ? 'dark' : 'light');
+						document.documentElement.classList.toggle('dark', this.isDark);
+					}
+				}))
+			})
+		</script>
+	}
+}
+
 templ base() {
 	<!DOCTYPE html>
 	<html lang="en">
-		<link href={ templ.SafeURL("assets/css/output.css") } rel="stylesheet"/>
-		<body class="bg-gruvbox-grey-400 ">
-			<div class="flex items-center mx-auto max-w-sm bg-gruvbox-grey-500 text-gruvbox-foreground-200 p-6">
-				<p class="">
-					MY BLOG
-				</p>
-				<nav class="">
-					<a href="/">HOME</a>
-					<a href="/posts">POSTS</a>
-					<a href="/resume">RESUME</a>
-				</nav>
-			</div>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<!-- Tailwind CSS (output) -->
+			<link href={ templ.SafeURL("assets/css/output.css") } rel="stylesheet"/>
+			<!-- Alpine.js -->
+			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+			<!-- Theme switcher script -->
+			@ThemeSwitcherScript()
+		</head>
+		<body x-data="themeHandler" x-bind:class="themeClasses">
 			<div>
+				@modules.Navbar()
 				{ children... }
 			</div>
 			<footer>
-				<aside class="text-gruvbox-foreground-200">
-					<p>Copyright ©2024 </p>
+				<aside class="">
+					<p>Copyright ©2025 </p>
 					<p>All right reserved by Cameron Green</p>
 				</aside>
 			</footer>
