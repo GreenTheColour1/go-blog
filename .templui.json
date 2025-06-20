@@ -1,0 +1,7 @@
+{
+  "componentsDir": "views/components",
+  "utilsDir": "utils",
+  "moduleName": "github.com/GreenTheColour1/go-blog",
+  "jsDir": "assets/js",
+  "jsPublicPath": "/assets/js"
+}
