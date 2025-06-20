@@ -1,0 +1,14 @@
+package modules
+
+templ Navbar() {
+	<nav class="border-b py-3">
+		<div class="container content-center">
+			<a href="/home">HOME</a>
+			<a href="/posts">POSTS</a>
+			<a href="/resume">RESUME</a>
+		</div>
+		<div class="container mx-auto px-4 flex justify-end">
+			@ThemeSwitcher()
+		</div>
+	</nav>
+}
