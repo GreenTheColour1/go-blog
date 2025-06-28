@@ -1,4 +1,4 @@
 pgdata
 /views/*_templ.go
-/views/components/*_templ.go
 tmp
+views/modules/*_templ.go
