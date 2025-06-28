@@ -40,12 +40,12 @@ templ base() {
 			@ThemeSwitcherScript()
 		</head>
 		<body x-data="themeHandler" x-bind:class="themeClasses">
-			<div>
+			<div class="max-w-screen-lg mx-auto">
 				@modules.Navbar()
 				{ children... }
 			</div>
-			<footer>
-				<aside class="">
+			<footer class="max-w-screen-lg mx-auto">
+				<aside>
 					<p>Copyright ©2025 </p>
 					<p>All right reserved by Cameron Green</p>
 				</aside>
