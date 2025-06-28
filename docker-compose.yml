@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  blog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: go-blog
+
+  postgres:
+    image: postgres:bookworm
+    name: go-blog-db
+    restart: unless-stopped
+    volumes:
+      - pg-data:/var/lib/postgressql/data
+    environment:
+      - POSTGRES_DB="posts"
+
+volumes:
+  pg-data:
