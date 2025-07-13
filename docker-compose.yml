@@ -7,6 +7,11 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     container_name: go-blog
+    environment:
+      - POSTGRES_USER="blog"
+      - POSTGRES_PASSWORD=""
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB="posts"
 
   postgres:
     image: postgres:bookworm
@@ -15,6 +20,9 @@ services:
     volumes:
       - pg-data:/var/lib/postgressql/data
     environment:
+      - POSTGRES_USER="blog"
+      - POSTGRES_PASSWORD=""
+      - POSTGRES_PORT=5432
       - POSTGRES_DB="posts"
 
 volumes:
