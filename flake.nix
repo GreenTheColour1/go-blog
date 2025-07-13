@@ -41,12 +41,12 @@
             license = pkgs.lib.licenses.mit;
           };
         };
+        go-migrate-pg = pkgs.go-migrate.overrideAttrs (oldAttrs: {
+          tags = [ "postgres" ];
+        });
       in
       rec {
-
         devShell = pkgs.mkShell {
-          buildInputs = [ pkgs.zsh ];
-
           nativeBuildInputs = with pkgs; [
             go
             templ
@@ -57,13 +57,19 @@
             delve
             tailwindcss_4
             templui
-            docker
+            go-migrate-pg
           ];
 
           shellHook = ''
             export PGHOST=$USER
             export PGDATA=./pgdata
             export PGSOCKET=/tmp
+
+            export POSTGRES_USER=$USER
+            export POSTGRES_PORT=5432
+            export POSTGRES_PASSWORD=""
+            export POSTGRES_DB=postgres
+            export ENVIRONMENT=dev
 
             # needed for debugging with delve
             export CGO_CFLAGS="-O2"
