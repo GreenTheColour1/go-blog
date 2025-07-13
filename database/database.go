@@ -7,10 +7,15 @@ import (
 	"fmt"
 	"io/fs"
 	"log"
+	"os"
 	"strings"
 	"time"
 
 	"github.com/GreenTheColour1/go-blog/posts"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 )
 
@@ -19,16 +24,21 @@ type Database struct {
 	ctx context.Context
 }
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "fishy"
-	password = ""
-	dbname   = "postgres"
-)
-
 func Connect() Database {
-	pgsqlconn := fmt.Sprintf("user=%s dbname=%s host=/tmp sslmode=disable", user, dbname)
+
+	devEnv, _ := os.LookupEnv("ENVIRONMENT")
+	user, _ := os.LookupEnv("POSTGRES_USER")
+	password, _ := os.LookupEnv("POSTGRES_PASSWORD")
+	dbname, _ := os.LookupEnv("POSTGRES_DB")
+
+	pgsqlconn := ""
+
+	if devEnv == "dev" {
+		pgsqlconn = fmt.Sprintf("user=%s password=%s port=5432 dbname=%s host=/tmp sslmode=disable", user, password, dbname)
+	} else {
+		pgsqlconn = fmt.Sprintf("user=%s password=%s port=5432 dbname=%s sslmode=disable", user, password, dbname)
+	}
+
 	db, err := sql.Open("postgres", pgsqlconn)
 	if err != nil {
 		log.Fatal(err)
@@ -38,7 +48,14 @@ func Connect() Database {
 
 	ctx := context.Background()
 
-	createPostsTable(ctx, db)
+	// Apply migrations
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	m, err := migrate.NewWithDatabaseInstance("file://database/migrations", "postgres", driver)
+	if err != nil {
+		log.Fatal(err)
+	}
+	m.Up()
+
 	err = loadMarkdownFiles(ctx, db)
 	if err != nil {
 		log.Fatal(err)
@@ -58,7 +75,7 @@ func (db Database) GetPostBySlug(slug string) (*posts.Post, error) {
 		return nil, fmt.Errorf("Failed to read file %s: %w", post.Filename, err)
 	}
 
-	post.Body = string(body)
+	post.Body = body
 
 	return post, nil
 }
@@ -81,25 +98,6 @@ func (db Database) GetAllPosts() ([]posts.Post, error) {
 	}
 
 	return posts, nil
-}
-
-func createPostsTable(ctx context.Context, db *sql.DB) error {
-	_, err := db.ExecContext(ctx, `
-		CREATE TABLE IF NOT EXISTS posts (
-			id uuid primary key,
-			created_at timestamp not null,
-			updated_at timestamp not null,
-			title varchar(255) not null,
-			filename varchar(255) not null,
-			slug varchar(255) not null,
-			hash bytea not null
-		)
-		`)
-	if err != nil {
-		return fmt.Errorf("Failed to create table posts: %w", err)
-	}
-
-	return nil
 }
 
 func loadMarkdownFiles(ctx context.Context, db *sql.DB) error {
