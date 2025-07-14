@@ -7,9 +7,9 @@ templ PostsBody(data []posts.Post) {
 	@base() {
 		<div>
 			<div>
-				<h1>THIS IS ALL MY POSTS</h1>
+				<h1 class="text-3xl my-8">Articles</h1>
 			</div>
-			<ul>
+			<ul class="mb-6">
 				for _, post := range data {
 					<li><a href={ templ.URL(fmt.Sprintf("post/%s", post.Slug)) }>{ fmt.Sprintf("%s - %s", post.Created_at.Format("2006-01-02"), post.Title) }</a></li>
 				}
