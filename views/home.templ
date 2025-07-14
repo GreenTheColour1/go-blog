@@ -2,10 +2,58 @@ package views
 
 templ Home() {
 	@base() {
-		<div>
-			<div class="bg-sky-400 p-4 rounded shadow">
-				<h1 class="text-2xl font-bold text-sky-800">Welcome</h1>
-			</div>
+		<div class="py-4">
+			<h1 class="text-4xl pb-4">IN PROGRESS</h1>
+			<p class="font-bold">
+				I am currently working on this.	If you have any questions or would like to reach out please feel free to reach out to me at <a class="text-blue-600 visited:text-purple-600" href="mailto:contact@camerongreen.ca">contact@camerongreen.ca</a>
+			</p>
+			<br/>
+			<p>I have a few goals while working on this project</p>
+			<ul class="list-disc list-inside pl-2">
+				<li>I want to learn how to make a website in Go</li>
+				<li>I want a place to write about tech and things I find interesting</li>
+				<li>I want a place for employers to go to learn more about me</li>
+			</ul>
+			<br/>
+			<p>I have a couple design goals for this project</p>
+			<ol class="list-decimal list-inside pl-2">
+				<li>
+					No using AI for writing code
+					<ol class="list-[upper-roman] list-inside pl-4">
+						<li>
+							I'm not against using AI to code but I believe that if your goal is to learn then it's
+							best to write and solve problems yourself
+						</li>
+					</ol>
+				</li>
+				<li>
+					Use markdown for writing posts
+					<ol class="list-[upper-roman] list-inside pl-4">
+						<li>
+							I don't want to be writing posts in HTML and since converting markdown to HTML is so simple it's a perfect fit
+						</li>
+					</ol>
+				</li>
+				<li>
+					Server side rendering
+					<ol class="list-[upper-roman] list-inside pl-4">
+						<li>
+							I believe that this is the correct choice for a project of this style
+							because the front-end is quite simple, needs minimal JavaScript. This
+							should result in the end user experience being fast and clean
+						</li>
+					</ol>
+				</li>
+				<li>
+					Use Docker for easy deployment
+					<ol class="list-[upper-roman] list-inside pl-4">
+						<li>
+							After running my homelab for a couple years now I've come to really enjoy the ease of which you can deploy a container to a server. 
+							Since this will be hosted on my homelab, it should be build to integrate with my existing infastructure
+						</li>
+					</ol>
+				</li>
+			</ol>
 		</div>
 	}
 }
