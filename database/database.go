@@ -36,7 +36,8 @@ func Connect() Database {
 	if devEnv == "dev" {
 		pgsqlconn = fmt.Sprintf("user=%s password=%s port=5432 dbname=%s host=/tmp sslmode=disable", user, password, dbname)
 	} else {
-		pgsqlconn = fmt.Sprintf("user=%s password=%s port=5432 dbname=%s sslmode=disable", user, password, dbname)
+		url, _ := os.LookupEnv("POSTGRES_URL")
+		pgsqlconn = url
 	}
 
 	db, err := sql.Open("postgres", pgsqlconn)
@@ -44,7 +45,7 @@ func Connect() Database {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Connected")
+	log.Println("Connected to DB")
 
 	ctx := context.Background()
 
