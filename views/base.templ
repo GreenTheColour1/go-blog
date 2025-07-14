@@ -36,6 +36,8 @@ templ base() {
 			<link href={ templ.SafeURL("/assets/css/output.css") } rel="stylesheet"/>
 			<!-- Alpine.js -->
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+			<!-- Data -->
+			<script defer src="https://umami.camerongreen.ca/script.js" data-website-id="a3d0c197-d382-468f-ab1e-13785156ae88"></script>
 			<!-- Theme switcher script -->
 			@ThemeSwitcherScript()
 		</head>
@@ -44,7 +46,7 @@ templ base() {
 				@modules.Navbar()
 				{ children... }
 			</div>
-			<footer class="max-w-screen-lg mx-auto">
+			<footer class="max-w-screen-lg mx-auto mt-8 pt-2 border-t">
 				<aside>
 					<p>Copyright ©2025 </p>
 					<p>All right reserved by Cameron Green</p>
