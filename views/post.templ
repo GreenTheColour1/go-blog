@@ -6,10 +6,10 @@ templ PostBody(data posts.Post) {
 	@base() {
 		<div>
 			<div>
-				<h1>{ data.Title }</h1>
+				<h1 class="text-3xl">{ data.Title }</h1>
 			</div>
 			<article>
-				@templ.Raw(data.Body)
+				@templ.Raw(data.RawHTML)
 			</article>
 		</div>
 	}
