@@ -8,6 +8,8 @@ import (
 	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting/v2"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/renderer/html"
 )
 
 type Post struct {
@@ -25,14 +27,21 @@ type Post struct {
 var PostAssets embed.FS
 
 func (p *Post) ConvertBodyToHTML() {
-	markdown := goldmark.New(goldmark.WithExtensions(
-		highlighting.NewHighlighting(
-			highlighting.WithStyle("gruvbox"),
-			highlighting.WithFormatOptions(
-				chromahtml.WithLineNumbers(true),
+	markdown := goldmark.New(
+		goldmark.WithExtensions(
+			extension.GFM,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("gruvbox"),
+				highlighting.WithFormatOptions(
+					chromahtml.WithLineNumbers(true),
+				),
 			),
 		),
-	))
+		goldmark.WithRendererOptions(
+			html.WithUnsafe(),
+			html.WithHardWraps(),
+		),
+	)
 
 	var buf bytes.Buffer
 
