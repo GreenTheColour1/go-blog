@@ -4,7 +4,7 @@ import "github.com/GreenTheColour1/go-blog/views/components/icon"
 import "github.com/GreenTheColour1/go-blog/views/components/separator"
 
 templ Navbar() {
-	<nav class="border-b py-3">
+	<nav class="border-b py-3 mb-4">
 		<div class="flex justify-between items-center relative">
 			<div class="flex items-center">
 				<a class="flex items-center gap-1.5 pr-3" href="/home">
@@ -23,10 +23,10 @@ templ Navbar() {
 			<div class="container mx-auto px-4 flex justify-end">
 				@ThemeSwitcher()
 				@separator.Separator(separator.Props{Orientation: separator.OrientationVertical, Class: "mx-4 pt-1 h-9"})
-				<a class="flex items-center gap-1 px-2" href="https://github.com/GreenTheColour1/go-blog">
+				<a class="flex items-center gap-1 px-2" data-umami-event="socials-github" href="https://github.com/GreenTheColour1/go-blog">
 					@icon.Github(icon.Props{Class: "w-6 h-6"})
 				</a>
-				<a class="flex items-center gap-1 px-2" href="https://www.linkedin.com/in/cameron-green-25b660195/">
+				<a class="flex items-center gap-1 px-2" data-umami-event="socials-linkdin" href="https://www.linkedin.com/in/cameron-green-25b660195/">
 					@icon.Linkedin(icon.Props{Class: "w-6 h-6"})
 				</a>
 			</div>
