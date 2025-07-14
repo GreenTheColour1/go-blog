@@ -30,11 +30,13 @@ func (s *Server) Start() {
 	})
 
 	mux.HandleFunc("/post/{slug}", func(w http.ResponseWriter, r *http.Request) {
-		data, err := db.GetPostBySlug(r.PathValue("slug"))
+		post, err := db.GetPostBySlug(r.PathValue("slug"))
 		if err != nil {
 			log.Fatal(err)
 		}
-		views.PostBody(*data).Render(r.Context(), w)
+		post.ConvertBodyToHTML()
+
+		views.PostBody(*post).Render(r.Context(), w)
 	})
 
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.FS(assets.Assets))))
