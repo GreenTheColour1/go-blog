@@ -34,6 +34,7 @@
     --text-4xl--line-height: calc(2.5 / 2.25);
     --font-weight-medium: 500;
     --font-weight-bold: 700;
+    --radius-xl: 0.75rem;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
@@ -327,6 +328,9 @@
   .rounded-md {
     border-radius: calc(var(--radius) - 2px);
   }
+  .rounded-xl {
+    border-radius: var(--radius-xl);
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -377,6 +381,9 @@
   }
   .bg-white {
     background-color: var(--color-white);
+  }
+  .p-3 {
+    padding: calc(var(--spacing) * 3);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
