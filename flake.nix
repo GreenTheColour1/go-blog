@@ -116,7 +116,7 @@
         packages.blog-image = pkgs.dockerTools.buildLayeredImage {
           name = "go-blog";
           # contents = [ go-migrate-pg ];
-          copyToRoot = [
+          contents = [
             ./database/migrations
             go-migrate-pg
           ];
