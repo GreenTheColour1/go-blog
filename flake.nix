@@ -103,7 +103,10 @@
             templ
           ];
 
-          buildInputs = [ go-migrate-pg ];
+          buildInputs = with pkgs; [
+            bash
+            go-migrate-pg
+          ];
 
           preBuild = ''
             templ generate
