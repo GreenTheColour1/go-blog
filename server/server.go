@@ -40,6 +40,8 @@ func (s *Server) Start() {
 		views.PostBody(*post).Render(r.Context(), w)
 	})
 
+	mux.Handle("/resume", templ.Handler(views.ResumeBody()))
+
 	mux.Handle("/assets/", disableCacheInDevMode(http.StripPrefix("/assets/", http.FileServer(http.FS(assets.Assets)))))
 
 	http.ListenAndServe(":8080", mux)
