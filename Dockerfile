@@ -17,7 +17,7 @@ WORKDIR /app
 
 COPY --from=build /tmp/nix-store-closure /nix/store
 COPY --from=build /tmp/build/result /app
-COPY --from=build /tmp/entrypoint.sh /app
+COPY --from=build /tmp/build/entrypoint.sh /app
 
 RUN chmod +x /app/entrypoint.sh
 
