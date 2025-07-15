@@ -45,7 +45,7 @@ func Connect() Database {
 		// if ok == false {
 		// 	log.Fatal("DATABASE_URL has not been set")
 		// }
-		pgsqlconn = "postgresql://blog:blog@db:5432/blog?sslmode=disable"
+		pgsqlconn = "postgresql://blog:blog@postgres:5432/blog?sslmode=disable"
 	}
 
 	log.Printf("Using connstring: %s", pgsqlconn)
