@@ -118,7 +118,7 @@
           contents = [ go-migrate-pg ];
           config = {
             Cmd = [
-              "migrate -source file://database/migrations -database \"$POSTGRES_URL\" up"
+              "migrate -source file://database/migrations -database '$POSTGRES_URL' up"
               "${packages.go-blog}/bin/blog"
             ];
             ExposedPorts = {
