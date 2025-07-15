@@ -122,7 +122,7 @@
           ];
           config = {
             Cmd = [
-              "migrate -source file:/// -database postgresql://blog:blog@db:5432/posts up"
+              "migrate -source file://migrations -database postgresql://blog:blog@db:5432/posts up"
               "${packages.go-blog}/bin/blog"
             ];
             ExposedPorts = {
