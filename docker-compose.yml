@@ -5,12 +5,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
     restart: unless-stopped
     container_name: go-blog
     ports:
       - 8042:8080
     environment:
-      DATABASE_URL: postgresql://blog:blog@db:5432/posts
+      DATABASE_URL: postgresql://postgres:blog@db:5432/postgres
 
   postgres:
     image: postgres:bookworm
@@ -18,9 +21,12 @@ services:
     volumes:
       - pg-data:/var/lib/postgressql/data
     environment:
-      POSTGRES_DB: posts
-      POSTGRES_USER: blog
       POSTGRES_PASSWORD: blog
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
 
 volumes:
   pg-data:
