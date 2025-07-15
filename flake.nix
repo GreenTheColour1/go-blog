@@ -99,7 +99,10 @@
 
           vendorHash = "sha256-q9MUb+zhEKzDGSxJga3nxkT1iP++ckrxbsbTvW3QQhw=";
 
-          nativeBuildInputs = with pkgs; [ templ ];
+          nativeBuildInputs = with pkgs; [
+            templ
+            go-migrate-pg
+          ];
 
           preBuild = ''
             templ generate
