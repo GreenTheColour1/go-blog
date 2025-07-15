@@ -17,8 +17,10 @@ WORKDIR /app
 
 COPY --from=build /tmp/nix-store-closure /nix/store
 COPY --from=build /tmp/build/result /app
-COPY --from=build /tmp/build/database/migrations /app/database/migrations
+COPY --from=build /tmp/entrypoint.sh /app
+
+RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 8080
 
-CMD ["/app/database/migrations/migrate.sh && /app/bin/blog"]
+ENTRYPOINT [ "/app/entrypoint.sh" ]
