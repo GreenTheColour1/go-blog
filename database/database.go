@@ -48,6 +48,7 @@ func Connect() Database {
 		pgsqlconn = "postgresql://blog:blog@db:5432/blog"
 	}
 
+	log.Printf("Using connstring: %s", pgsqlconn)
 	db, err := sql.Open("postgres", pgsqlconn)
 	if err != nil {
 		log.Fatal(err)
