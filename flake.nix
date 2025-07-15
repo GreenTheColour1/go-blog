@@ -115,7 +115,11 @@
 
         packages.blog-image = pkgs.dockerTools.buildLayeredImage {
           name = "go-blog";
-          contents = [ go-migrate-pg ];
+          # contents = [ go-migrate-pg ];
+          copyToRoot = [
+            ./database/migrations
+            go-migrate-pg
+          ];
           config = {
             Cmd = [
               "migrate -source file://database/migrations -database postgresql://blog:blog@db:5432/posts up"
