@@ -45,7 +45,7 @@ func Connect() Database {
 		// if ok == false {
 		// 	log.Fatal("DATABASE_URL has not been set")
 		// }
-		pgsqlconn = "postgresql://blog:blog@db:5432/blog"
+		pgsqlconn = "postgresql://blog:blog@db:5432/blog?sslmode=disable"
 	}
 
 	log.Printf("Using connstring: %s", pgsqlconn)
@@ -68,7 +68,9 @@ func Connect() Database {
 	if err != nil {
 		log.Fatal(err)
 	}
-	m.Up()
+	if err := m.Up(); err != nil {
+		log.Fatal(err)
+	}
 
 	err = loadMarkdownFiles(ctx, db)
 	if err != nil {
