@@ -103,8 +103,7 @@
             templ
           ];
 
-          buildInputs = with pkgs; [
-            bash
+          buildInputs = [
             go-migrate-pg
           ];
 
@@ -112,6 +111,20 @@
             templ generate
           '';
 
+        };
+
+        packages.blog-image = pkgs.dockerTools.buildLayeredImage {
+          name = "go-blog";
+          contents = [ go-migrate-pg ];
+          config = {
+            Cmd = [
+              "migrate -source file://database/migrations -database \"$POSTGRES_URL\" up"
+              "${packages.go-blog}/bin/blog"
+            ];
+            ExposedPorts = {
+              "8080/tcp" = { };
+            };
+          };
         };
 
         defaultPackage = packages.go-blog;
