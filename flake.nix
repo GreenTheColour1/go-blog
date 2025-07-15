@@ -104,7 +104,7 @@
           ];
 
           buildInputs = [
-            go-migrate-pg
+            # go-migrate-pg
           ];
 
           preBuild = ''
@@ -117,7 +117,7 @@
           name = "go-blog";
           # contents = [ go-migrate-pg ];
           contents = [
-            go-migrate-pg
+            # go-migrate-pg
           ];
           config = {
             Cmd = [

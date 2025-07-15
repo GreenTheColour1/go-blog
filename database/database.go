@@ -43,6 +43,7 @@ func Connect() Database {
 	} else {
 		url, _ := os.LookupEnv("POSTGRES_URL")
 		pgsqlconn = url
+		log.Println(pgsqlconn)
 	}
 
 	db, err := sql.Open("postgres", pgsqlconn)

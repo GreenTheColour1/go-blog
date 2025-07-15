@@ -6,14 +6,14 @@ services:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
     restart: unless-stopped
     container_name: go-blog
     ports:
       - 8042:8080
     environment:
-      DATABASE_URL: postgresql://blog:blog@db:5432/postgres
+      DATABASE_URL: postgresql://blog:blog@db:5432/blog
 
   postgres:
     image: postgres:bookworm
@@ -23,6 +23,7 @@ services:
     environment:
       POSTGRES_USER: blog
       POSTGRES_PASSWORD: blog
+      POSTGRES_DB: blog
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 1s
