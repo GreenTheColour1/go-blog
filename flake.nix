@@ -117,12 +117,11 @@
           name = "go-blog";
           # contents = [ go-migrate-pg ];
           contents = [
-            ./database/migrations
             go-migrate-pg
           ];
           config = {
             Cmd = [
-              "/bin/migrate -source file:/// -database postgresql://blog:blog@db:5432/posts up &&"
+              # "/bin/migrate -source file:/// -database postgresql://blog:blog@db:5432/posts up &&"
               "${packages.go-blog}/bin/blog"
             ];
             ExposedPorts = {

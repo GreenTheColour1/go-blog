@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"database/sql"
+	"embed"
 	"fmt"
 	"io/fs"
 	"log"
@@ -16,6 +17,7 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 	_ "github.com/lib/pq"
 )
 
@@ -23,6 +25,9 @@ type Database struct {
 	DB  *sql.DB
 	ctx context.Context
 }
+
+//go:embed migrations/*.sql
+var files embed.FS
 
 func Connect() Database {
 
@@ -50,14 +55,16 @@ func Connect() Database {
 	ctx := context.Background()
 
 	// Apply migrations
-	if devEnv == "dev" {
-		driver, err := postgres.WithInstance(db, &postgres.Config{})
-		m, err := migrate.NewWithDatabaseInstance("file://database/migrations", "postgres", driver)
-		if err != nil {
-			log.Fatal(err)
-		}
-		m.Up()
+	d, err := iofs.New(files, "migrations")
+	if err != nil {
+		log.Fatal(err)
 	}
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	m, err := migrate.NewWithInstance("iofs", d, "postgres", driver)
+	if err != nil {
+		log.Fatal(err)
+	}
+	m.Up()
 
 	err = loadMarkdownFiles(ctx, db)
 	if err != nil {
