@@ -41,11 +41,11 @@ func Connect() Database {
 	if devEnv == "dev" {
 		pgsqlconn = fmt.Sprintf("user=%s password=%s port=5432 dbname=%s host=/tmp sslmode=disable", user, password, dbname)
 	} else {
-		url, ok := os.LookupEnv("DATABASE_URL")
-		if ok == false {
-			log.Fatal("DATABASE_URL has not been set")
-		}
-		pgsqlconn = url
+		// url, ok := os.LookupEnv("DATABASE_URL")
+		// if ok == false {
+		// 	log.Fatal("DATABASE_URL has not been set")
+		// }
+		pgsqlconn = "postgresql://blog:blog@db:5432/blog"
 	}
 
 	db, err := sql.Open("postgres", pgsqlconn)
