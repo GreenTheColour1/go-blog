@@ -97,7 +97,7 @@
 
           src = ./.;
 
-          vendorHash = "sha256-TJDRrjiW8j2pw5qyD0YT7YtvEpKxgVhlvAXntl8clIk=";
+          vendorHash = "sha256-q9MUb+zhEKzDGSxJga3nxkT1iP++ckrxbsbTvW3QQhw=";
 
           nativeBuildInputs = with pkgs; [ templ ];
 
