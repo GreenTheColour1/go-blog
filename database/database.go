@@ -50,12 +50,14 @@ func Connect() Database {
 	ctx := context.Background()
 
 	// Apply migrations
-	driver, err := postgres.WithInstance(db, &postgres.Config{})
-	m, err := migrate.NewWithDatabaseInstance("file://database/migrations", "postgres", driver)
-	if err != nil {
-		log.Fatal(err)
+	if devEnv == "dev" {
+		driver, err := postgres.WithInstance(db, &postgres.Config{})
+		m, err := migrate.NewWithDatabaseInstance("file://database/migrations", "postgres", driver)
+		if err != nil {
+			log.Fatal(err)
+		}
+		m.Up()
 	}
-	m.Up()
 
 	err = loadMarkdownFiles(ctx, db)
 	if err != nil {

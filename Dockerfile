@@ -21,4 +21,4 @@ COPY --from=build /tmp/build/database/migrations /app/database/migrations
 
 EXPOSE 8080
 
-CMD ["/app/bin/blog"]
+CMD ["/app/database/migrations/migrate.sh && /app/bin/blog"]

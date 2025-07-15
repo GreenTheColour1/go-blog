@@ -101,8 +101,9 @@
 
           nativeBuildInputs = with pkgs; [
             templ
-            go-migrate-pg
           ];
+
+          buildInputs = [ go-migrate-pg ];
 
           preBuild = ''
             templ generate
