@@ -6,6 +6,11 @@ templ ThemeSwitcherScript() {
 	{{ handle := templ.NewOnceHandle() }}
 	@handle.Once() {
 		<script nonce={ templ.GetNonce(ctx) }>
+			// Default to dark if no theme preferance is present
+			if (localStorage.getItem('appTheme') == null) {
+				localStorage.setItem('appTheme', 'dark')
+			}
+
 			// Initial theme setup
 			document.documentElement.classList.toggle('dark', localStorage.getItem('appTheme') === 'dark');
 
