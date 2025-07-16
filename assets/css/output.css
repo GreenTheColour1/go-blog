@@ -10,8 +10,6 @@
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-blue-500: oklch(62.3% 0.214 259.815);
-    --color-blue-600: oklch(54.6% 0.245 262.881);
-    --color-purple-600: oklch(55.8% 0.288 302.321);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-black: #000;
@@ -289,12 +287,6 @@
   .list-inside {
     list-style-position: inside;
   }
-  .list-\[upper-roman\] {
-    list-style-type: upper-roman;
-  }
-  .list-decimal {
-    list-style-type: decimal;
-  }
   .list-disc {
     list-style-type: disc;
   }
@@ -412,11 +404,9 @@
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
   }
-  .pl-2 {
-    padding-left: calc(var(--spacing) * 2);
-  }
-  .pl-4 {
-    padding-left: calc(var(--spacing) * 4);
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
   .text-3xl {
     font-size: var(--text-3xl);
@@ -451,9 +441,6 @@
   }
   .text-black {
     color: var(--color-black);
-  }
-  .text-blue-600 {
-    color: var(--color-blue-600);
   }
   .text-destructive-foreground {
     color: var(--destructive-foreground);
@@ -493,11 +480,6 @@
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
-  .visited\:text-purple-600 {
-    &:visited {
-      color: var(--color-purple-600);
-    }
   }
   .hover\:bg-accent {
     &:hover {
@@ -628,7 +610,7 @@
   --card-foreground: hsl(60 9.1% 97.8%);
   --border: hsl(30, 12.1%, 51.37%);
   --input: hsl(12 6.5% 15.1%);
-  --primary: hsl(20.5 90.2% 48.2%);
+  --primary: hsl(26.99, 99.13%, 54.71%);
   --primary-foreground: hsl(60 9.1% 97.8%);
   --secondary: hsl(12 6.5% 15.1%);
   --secondary-foreground: hsl(60 9.1% 97.8%);
@@ -647,6 +629,14 @@
     background-color: var(--background);
     color: var(--foreground);
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+li a {
+  color: var(--primary);
+  &:hover {
+    @media (hover: hover) {
+      text-decoration-line: underline;
+    }
   }
 }
 article h1 {

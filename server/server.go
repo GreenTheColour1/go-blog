@@ -20,7 +20,13 @@ func (s *Server) Start() {
 	db := database.Connect()
 	defer db.DB.Close()
 
-	mux.Handle("/", templ.Handler(views.Home()))
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data, err := db.GetTopPosts(5)
+		if err != nil {
+			log.Fatal(err)
+		}
+		views.Home(data).Render(r.Context(), w)
+	})
 
 	mux.HandleFunc("/posts", func(w http.ResponseWriter, r *http.Request) {
 		data, err := db.GetAllPosts()

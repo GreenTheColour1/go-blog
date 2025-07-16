@@ -59,6 +59,7 @@ func Connect() Database {
 	ctx := context.Background()
 
 	// Apply migrations
+	log.Println("Starting migrations")
 	d, err := iofs.New(files, "migrations")
 	if err != nil {
 		log.Fatal(err)
@@ -68,10 +69,9 @@ func Connect() Database {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := m.Up(); err != nil {
-		log.Fatal(err)
-	}
+	m.Up()
 
+	log.Println("Loading markdown files")
 	err = loadMarkdownFiles(ctx, db)
 	if err != nil {
 		log.Fatal(err)
@@ -97,7 +97,27 @@ func (db Database) GetPostBySlug(slug string) (*posts.Post, error) {
 }
 
 func (db Database) GetAllPosts() ([]posts.Post, error) {
-	result, err := db.DB.QueryContext(db.ctx, `SELECT created_at, title, slug FROM posts`)
+	result, err := db.DB.QueryContext(db.ctx, `SELECT created_at, title, slug FROM posts ORDER BY created_at DESC`)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to get posts: %w", err)
+	}
+	defer result.Close()
+
+	var p posts.Post
+	var posts []posts.Post
+
+	for result.Next() {
+		if err := result.Scan(&p.Created_at, &p.Title, &p.Slug); err != nil {
+			return nil, fmt.Errorf("Failed to scan posts: %w", err)
+		}
+		posts = append(posts, p)
+	}
+
+	return posts, nil
+}
+
+func (db Database) GetTopPosts(i int) ([]posts.Post, error) {
+	result, err := db.DB.QueryContext(db.ctx, `SELECT created_at, title, slug FROM posts ORDER BY created_at DESC LIMIT $1`, i)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to get posts: %w", err)
 	}
