@@ -18,13 +18,13 @@
         pkgs = import nixpkgs { inherit system; };
         templui = pkgs.buildGoModule rec {
           pname = "templui";
-          version = "0.75.4";
+          version = "0.97.0";
 
           src = pkgs.fetchFromGitHub {
             owner = "axzilla";
             repo = "templui";
             tag = "v${version}";
-            hash = "sha256-YxRC170+UsTxLrkYwWENwtknljZFh+PKmoRPCQlKMcM=";
+            hash = "sha256-Mj1sad+cZKOTwrU6YxgS3IMQYm2BOIPpm4ssbEkE3Nw=";
           };
 
           nativeBuildInputs = with pkgs; [ templ ];
@@ -33,7 +33,7 @@
             templ generate
           '';
 
-          vendorHash = "sha256-oi225lRIyvuEvHJj0cwGwwUa1O5MeWWzsPkFK1cPwEY=";
+          vendorHash = "sha256-WPr+fXSCdZ4ENMG5ALxlTVfzx4wKb1gSu22POjQFbEI=";
 
           meta = {
             description = "The UI Kit for templ";
