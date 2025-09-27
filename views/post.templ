@@ -5,8 +5,12 @@ import "github.com/GreenTheColour1/go-blog/posts"
 templ PostBody(data posts.Post) {
 	@base() {
 		<div>
-			<div>
+			<div class="pb-4">
 				<h1 class="text-3xl">{ data.Title }</h1>
+				<div class="grid">
+					<span class="text-sm text-muted-foreground">Uploaded on: { data.Created_at.Format("January 02, 2006 at 15:04") }</span>
+					<span class="text-sm text-muted-foreground">Edited on: { data.Updated_at.Format("January 02, 2006 at 15:04") }</span>
+				</div>
 			</div>
 			<article id="post">
 				@templ.Raw(data.RawHTML)
