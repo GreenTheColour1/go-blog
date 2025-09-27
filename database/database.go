@@ -82,7 +82,7 @@ func Connect() Database {
 
 func (db Database) GetPostBySlug(slug string) (*posts.Post, error) {
 	post := new(posts.Post)
-	if err := db.DB.QueryRowContext(db.ctx, `SELECT filename, title FROM posts WHERE slug = $1`, slug).Scan(&post.Filename, &post.Title); err != nil {
+	if err := db.DB.QueryRowContext(db.ctx, `SELECT filename, title, created_at, updated_at FROM posts WHERE slug = $1`, slug).Scan(&post.Filename, &post.Title, &post.Created_at, &post.Updated_at); err != nil {
 		return nil, fmt.Errorf("Failed to get post: %w", err)
 	}
 
