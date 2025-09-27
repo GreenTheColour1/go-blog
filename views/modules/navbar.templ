@@ -2,10 +2,51 @@ package modules
 
 import "github.com/GreenTheColour1/go-blog/views/components/icon"
 import "github.com/GreenTheColour1/go-blog/views/components/separator"
+import "github.com/GreenTheColour1/go-blog/views/components/sheet"
+import "github.com/GreenTheColour1/go-blog/views/components/button"
 
 templ Navbar() {
 	<nav class="border-b py-3 mb-4">
-		<div class="flex justify-between items-center relative">
+		<div class="flex justify-between items-center md:hidden">
+			<span class="text-xl">My Blog</span>
+			@sheet.Sheet(sheet.Props{Side: sheet.SideLeft}) {
+				@sheet.Trigger() {
+					@button.Button(button.Props{Variant: button.VariantGhost, Class: "flex justify-end"}) {
+						@icon.List()
+					}
+				}
+				@sheet.Content() {
+					<div class="grid grid-flow-col grid-rows-3 gap-6 px-4 pt-8">
+						<a class="flex gap-3" href="/home">
+							@icon.House(icon.Props{Class: "w-6 h-6"})
+							<span class="text-xl">HOME</span>
+						</a>
+						<a class="flex gap-3" href="/posts">
+							@icon.ScrollText(icon.Props{Class: "w-6 h-6"})
+							<span class="text-xl">POSTS</span>
+						</a>
+						<a class="flex gap-3" href="/resume">
+							@icon.FileUser(icon.Props{Class: "w-6 h-6"})
+							<span class="text-xl">RESUME</span>
+						</a>
+					</div>
+					@sheet.Footer() {
+						<div class="flex justify-between items-center">
+							<a class="flex gap-1 px-2" data-umami-event="socials-github" href="https://github.com/GreenTheColour1/go-blog">
+								@icon.Github(icon.Props{Class: "w-6 h-6"})
+							</a>
+							<a class="flex gap-1 px-2" data-umami-event="socials-linkdin" href="https://www.linkedin.com/in/cameron-green-25b660195/">
+								@icon.Linkedin(icon.Props{Class: "w-6 h-6"})
+							</a>
+							<div class="flex justify-end">
+								@ThemeSwitcher()
+							</div>
+						</div>
+					}
+				}
+			}
+		</div>
+		<div class="hidden md:flex justify-between items-center relative">
 			<div class="flex items-center">
 				<a class="flex items-center gap-1.5 pr-3" href="/home">
 					@icon.House(icon.Props{Class: "w-6 h-6"})

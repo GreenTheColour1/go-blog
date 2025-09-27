@@ -1,6 +1,7 @@
 package views
 
 import "github.com/GreenTheColour1/go-blog/views/modules"
+import "github.com/GreenTheColour1/go-blog/views/components/dialog"
 
 templ ThemeSwitcherScript() {
 	{{ handle := templ.NewOnceHandle() }}
@@ -45,9 +46,10 @@ templ base() {
 			<script defer src="https://umami.camerongreen.ca/script.js" data-website-id="a3d0c197-d382-468f-ab1e-13785156ae88"></script>
 			<!-- Theme switcher script -->
 			@ThemeSwitcherScript()
+			@dialog.Script()
 		</head>
 		<body x-data="themeHandler" x-bind:class="themeClasses">
-			<div class="max-w-screen-lg mx-auto">
+			<div class="max-w-screen-lg mx-auto px-4 md:px-0">
 				@modules.Navbar()
 				{ children... }
 			</div>
