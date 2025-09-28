@@ -93,7 +93,7 @@
 
         packages.go-blog = pkgs.buildGoModule {
           pname = "go-blog";
-          version = "0.1";
+          version = "0.5";
 
           src = ./.;
 
