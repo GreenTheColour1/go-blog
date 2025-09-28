@@ -115,7 +115,7 @@ services:
     image: postgres:bookworm
     restart: unless-stopped
     volumes:
-      - pg-data:/var/lib/postgressql/data
+      - pg-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: blog
       POSTGRES_PASSWORD: VERY_SECURE_PASSWORD_GOES_HERE
