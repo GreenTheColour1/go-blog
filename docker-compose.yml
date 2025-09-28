@@ -2,7 +2,7 @@ version: '3'
 
 services:
   blog:
-    image: go-blog:sr9wvrl7v05kqc91p441px3lpj102l8m
+    image: go-blog:wzkspf00s720gl94v42wjd8hgw6assll
     restart: unless-stopped
     container_name: go-blog
     ports:
@@ -14,7 +14,7 @@ services:
     image: postgres:bookworm
     restart: unless-stopped
     volumes:
-      - pg-data:/var/lib/postgressql/data
+      - pg-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: blog
       POSTGRES_PASSWORD: blog
